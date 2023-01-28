@@ -458,12 +458,15 @@ module.exports = {
         }
     }),
     viewStreamMedia: catchAsyncErrors( async (req, res, next)=>{
+        
         try {
             const mediaId = req.params.id
             const checkRow = await librariesModel.findOne({"_id": mediaId});
             if(!checkRow) return next(new ErrorHandler(false, req.__("Media file does not exist"), 200));
             
             const range = req.headers.range;
+            console.log(req.headers.range);
+            console.log('AAAAAAAAAAAAAAAA');
             if (!range) {  res.status(400).send("Requires Range header") }
             
             let videoPath = checkRow.path;
